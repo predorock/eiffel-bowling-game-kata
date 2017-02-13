@@ -20,7 +20,6 @@ feature
 feature
 	roll (pins:INTEGER)
 		do
-			print("Rolling ");print(pins);print(" at index ");print(counter);print("%N")
 			rolls.enter (pins, counter)
 			counter := counter +1
 		end
@@ -38,16 +37,26 @@ feature
 			until
 				i >= 10
 			loop
-				if rolls.valid_index(roll_index) and then is_strike(roll_index) and rolls.valid_index (roll_index + 1) and rolls.valid_index (roll_index + 2)
+				if rolls.valid_index(roll_index)
+					and rolls.valid_index (roll_index + 1)
+					and rolls.valid_index (roll_index + 2)
+					and is_strike(roll_index)
 				then
+					print("STRIKE%N")
 					total_score := total_score + 10 + rolls.at (roll_index + 1) + rolls.at (roll_index + 2)
 					roll_index := roll_index + 1
-				elseif rolls.valid_index(roll_index) and rolls.valid_index (roll_index + 1) and then is_spare(roll_index) and rolls.valid_index (roll_index + 2)
+				elseif rolls.valid_index(roll_index)
+					and rolls.valid_index (roll_index + 1)
+					and rolls.valid_index (roll_index + 2)
+					and is_spare(roll_index)
 				then
-					total_score := total_score + rolls.at (roll_index) + rolls.at (roll_index + 2)
+					print("SPARE%N")
+					total_score := total_score + rolls.at (roll_index) + rolls.at (roll_index + 1) + rolls.at (roll_index + 2)
 					roll_index := roll_index + 2
-				elseif rolls.valid_index (roll_index) and rolls.valid_index (roll_index + 1)
+				elseif rolls.valid_index (roll_index)
+					and rolls.valid_index (roll_index + 1)
 				then
+					print("SCORE%N")
 					total_score := total_score + rolls.at (roll_index) + rolls.at (roll_index + 1)
 					roll_index := roll_index + 2
 				end
